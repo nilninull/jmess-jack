@@ -1,5 +1,6 @@
 #!/bin/bash
 ## Created by Juan-Pablo Caceres
+## Updated for Qt6 compatibility
 
 # Check for Platform
 platform='unknown'
@@ -14,7 +15,10 @@ fi
 
 # Set qmake command name
 if [[ $platform == 'linux' ]]; then
-    if hash qmake-qt5 2>/dev/null; then
+    if hash qmake6 2>/dev/null; then
+	echo "Using qmake6"
+	QCMD=qmake6
+    elif hash qmake-qt5 2>/dev/null; then
 	echo "Using qmake-qt5"
 	QCMD=qmake-qt5
     elif hash qmake-qt4 2>/dev/null; then
@@ -29,9 +33,14 @@ elif [[ $platform == 'macosx' ]]; then
     QCMD=qmake
 fi
 
+if [[ -z "$QCMD" ]]; then
+    echo "Error: qmake not found."
+    exit 1
+fi
+
 # Build
+mkdir -p release debug
 $QCMD jmess.pro
 make clean
 $QCMD jmess.pro
 make release
-

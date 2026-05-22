@@ -9,7 +9,7 @@ CONFIG(debug, debug|release) {
   TARGET = jmess
   }
 QT -= gui
-QT += xml
+QT += xml core
 
 !win32 {
   INCLUDEPATH+=/usr/local/include

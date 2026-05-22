@@ -41,9 +41,6 @@
 #include <QString>
 #include <QVector>
 #include <QtXml>
-#include <QXmlSimpleReader>
-#include <QXmlInputSource>
-#include <QXmlContentHandler>
 
 #include <jack/jack.h>
 

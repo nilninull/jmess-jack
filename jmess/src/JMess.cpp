@@ -179,7 +179,7 @@ void JMess::disconnectAll()
        it != mConnectedPorts.end(); ++it) {
     OutputInput = *it;
     
-    if (jack_disconnect(mClient, OutputInput[0].toLatin1(), OutputInput[1].toLatin1())) {
+    if (jack_disconnect(mClient, OutputInput[0].toLocal8Bit(), OutputInput[1].toLocal8Bit())) {
       cerr << "WARNING: port: " << qPrintable(OutputInput[0])
 	   << "and port: " << qPrintable(OutputInput[1])
 	   << " could not be disconnected.\n";
@@ -199,9 +199,6 @@ void JMess::disconnectAll()
 int JMess::parseXML(QString xmlInFile)
 {
   mPortsToConnect.clear();
-  QString errorStr;
-  int errorLine;
-  int errorColumn;
   
   QFile file(xmlInFile);
   if (!file.open(QIODevice::ReadOnly)) {
@@ -211,13 +208,13 @@ int JMess::parseXML(QString xmlInFile)
   }
 
   QDomDocument doc;
-  if (!doc.setContent(&file, true, &errorStr, &errorLine,
-		      &errorColumn)) {
+  QDomDocument::ParseResult result = doc.setContent(&file, QDomDocument::ParseOption::UseNamespaceProcessing);
+  if (!result) {
     cerr << "===================================================\n" 
 	 << "Error parsing XML input file:\n"
-	 << "Parse error at line " << errorLine
-	 << ", column " << errorColumn << "\n"
-	 << qPrintable(errorStr) << "\n"
+	 << "Parse error at line " << result.errorLine
+	 << ", column " << result.errorColumn << "\n"
+	 << qPrintable(result.errorMessage) << "\n"
 	 << "===================================================\n";
     return 1;
   }
@@ -272,11 +269,11 @@ void JMess::connectPorts(QString xmlInFile)
 	 it != mPortsToConnect.end(); ++it) {
       OutputInput = *it;
 
-      if (jack_connect(mClient, OutputInput[0].toLatin1(), OutputInput[1].toLatin1())) {
+      if (jack_connect(mClient, OutputInput[0].toLocal8Bit(), OutputInput[1].toLocal8Bit())) {
 	//Display a warining only if the error is not because the ports are already
 	//connected, in case the program doesn't display anyting.
 	if (EEXIST != 
-        jack_connect(mClient, OutputInput[0].toLatin1(), OutputInput[1].toLatin1())) {
+        jack_connect(mClient, OutputInput[0].toLocal8Bit(), OutputInput[1].toLocal8Bit())) {
 	  cerr << "WARNING: port: " << qPrintable(OutputInput[0])
 	       << "and port: " << qPrintable(OutputInput[1])
 	       << " could not be connected.\n";
