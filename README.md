@@ -28,3 +28,6 @@ If you just want to disconnect all from the command line:
 For a complete list of options, just type:
 
 `jmess`
+
+---
+This project has been updated for Qt6 compatibility with the assistance of Gemini CLI.
