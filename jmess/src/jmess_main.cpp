@@ -38,7 +38,7 @@ using namespace std;
 
 void main_dialog( int argc, char* argv[] );
 void printUsage();
-string version  = "1.0.3";
+string version  = "1.1.0";
 
 
 //*******************************************************************************
@@ -112,7 +112,7 @@ void main_dialog( int argc, char* argv[] )
     case 'v':
     //-------------------------------------------------------
     cout << "JMess VERSION: " << version << endl;
-    cout << "Copyright (c) 2007-2015 Juan-Pablo Caceres." << endl;
+    cout << "Copyright (c) 2007-2026 Juan-Pablo Caceres." << endl;
     cout << "SoundWIRE group at CCRMA, Stanford University" << endl;
     cout << "" << endl;
     std::exit(0);
@@ -143,7 +143,7 @@ void printUsage()
 {
   cout << "" << endl;
   cout << "JMess: A simple utility so save your jack-audio mess." << endl;
-  cout << "Copyright (C) 2007-2016 Juan-Pablo Caceres." << endl;
+  cout << "Copyright (C) 2007-2026 Juan-Pablo Caceres." << endl;
   cout << "VERSION: " << version << endl;
   cout << "" << endl;
   cout << "Usage: " << endl;
